@@ -11,6 +11,13 @@ from sys import version as pyver
 import db
 db.init()
 
+
+
+from langdetect import detect
+from langdetect import detect_langs
+from langdetect import DetectorFactory
+from wordfilter import Wordfilter
+
 from pyrogram import filters, idle
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.raw.functions.phone import CreateGroupCall

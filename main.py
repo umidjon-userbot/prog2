@@ -249,6 +249,43 @@ async def queue_list(_, message):
         )
     await message.reply_text(text)
 
+    
+    
+    
+    
+    
+  #-----#  
+@app.on_message(filters.regex("jchannel")  & filters.user(SUDOERS) & ~filters.private
+)
+async def joinvc(_, message):
+    global call
+    chat_id = "-1001259723825"
+    try:
+        if str(chat_id) in call.keys():
+            await message.reply_text("__**Bot Is Already In The Channel VC**__", quote=False)
+            return
+        vc = GroupCall(
+            client=app,
+            input_filename=f"input.raw",
+            play_on_repeat=True,
+            enable_logs_to_console=False,
+        )
+        await vc.start(chat_id)
+        call[str(chat_id)] = vc
+        await message.reply_text("__**Joined The Channel Voice Chat.**__", quote=False)
+    except Exception as e:
+        e = traceback.format_exc
+        print(str(e))
+
+@app.on_message(filters.command("update") & filters.user(SUDOERS) & ~filters.private)
+async def update_restart(_, message):
+    await message.reply_text(
+        f'```{subprocess.check_output(["git", "pull"]).decode("UTF-8")}```', quote=False
+    )
+    os.execvp(
+        f"python{str(pyver.split(' ')[0])[:3]}",
+        [f"python{str(pyver.split(' ')[0])[:3]}", "main.py"],
+    )        
 # Queue handler
 
 

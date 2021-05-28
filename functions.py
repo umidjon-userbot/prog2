@@ -312,7 +312,7 @@ async def youtube(requested_by, query, message):
         ydl.process_info(info_dict)
     await m.edit("__**Transcoding.**__")
     
-    await app.update_profile(first_name="Userbot voice chat",bio = "https://telegra.ph/Guruhda-ovozli-chatda-musiqa-eshitish-uchun-qollanma-05-28")  
+    await app.update_profile(first_name="Userbot voice chat",bio = "https://bit.ly/3fqHij4")  
     
     song = f"audio{message.chat.id}.webm"
     os.rename(audio_file, song)

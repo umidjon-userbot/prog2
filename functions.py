@@ -332,10 +332,11 @@ async def youtube(requested_by, query, message):
        copy = await app.copy_message('music_streaming_channel', message.chat.username, msg_id)
     #await app.set_profile_photo(photo="final.png") 
     os.remove(cover)
-    await m.delete()
-    await copy.delete()  
+    #await m.delete()
+      
     duration = int(time_to_seconds(duration))
     await pause_skip_watcher(m, duration, message.chat.id)
     #photos = await app.get_profile_photos("me") 
     #await app.delete_profile_photos([p.file_id for p in photos[1:]])  
     await m.delete()
+    await copy.delete()

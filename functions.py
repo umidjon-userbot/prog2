@@ -280,7 +280,7 @@ async def youtube(requested_by, query, message):
     
     
     songname = title.lower()
-    detecting = detect(songname)
+    #detecting = detect(songname)
          
     wordfilter = Wordfilter()
     wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai'])     

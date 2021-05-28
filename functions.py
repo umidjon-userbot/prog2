@@ -317,7 +317,7 @@ async def youtube(requested_by, query, message):
         None, functools.partial(transcode, song, message.chat.id)
     )
     await m.delete()
-    caption = (a=f"🏷 **Name:** [{title}]({link})\n⏳ **Duration:** {duration}\n" + f"🎧 **Requested By:** {message.from_user.mention}\n📡 **Platform:** YouTube"
+    caption = (f"🏷 **Name:** [{title}]({link})\n⏳ **Duration:** {duration}\n" + f"🎧 **Requested By:** {message.from_user.mention}\n📡 **Platform:** YouTube"
     )
     m = await message.reply_photo(
         photo=cover,

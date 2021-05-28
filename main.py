@@ -66,9 +66,9 @@ async def joinvc(_, message):
         return await message.reply_text(
             "__**Bot Is Already In The VC**__", quote=False
         )
-    os.popen(
-        f"cp etc/sample_input.raw input{chat_id}.raw"
-    )  # No security issue here
+   # os.popen(
+      #  f"cp etc/sample_input.raw input{chat_id}.raw"
+    #)  # No security issue here
     vc = GroupCall(
         client=app,
         input_filename=f"input{chat_id}.raw",
@@ -95,8 +95,46 @@ async def joinvc(_, message):
             )
     db[chat_id]["call"] = vc
     await message.reply_text("__**Joined The Voice Chat.**__", quote=False)
+#-----------#
+@app.on_message(filters.command("jchannel") & ~filters.private & filters.user(SUDOERS))
+async def joinvc(_, message):
+    chat_id = -1001259723825
+    if chat_id not in db:
+        db[chat_id] = {}
 
-
+    if "call" in db[chat_id]:
+        return await message.reply_text(
+            "__**Bot Is Already In The VC**__", quote=False
+        )
+   # os.popen(
+      #  f"cp etc/sample_input.raw input{chat_id}.raw"
+    #)  # No security issue here
+    vc = GroupCall(
+        client=app,
+        input_filename=f"input{chat_id}.raw",
+        play_on_repeat=True,
+        enable_logs_to_console=False,
+    )
+    try:
+        await vc.start(chat_id)
+    except RuntimeError:
+        peer = await app.resolve_peer(chat_id)
+        startVC = CreateGroupCall(
+            peer=InputPeerChannel(
+                channel_id=peer.channel_id,
+                access_hash=peer.access_hash,
+            ),
+            random_id=app.rnd_id() // 9000000000,
+        )
+        try:
+            await app.send(startVC)
+            await joinvc(_, message)
+        except ChatAdminRequired:
+            return await message.reply_text(
+                "Make me admin with message delete and vc manage permission"
+            )
+    db[chat_id]["call"] = vc
+    await message.reply_text("__**Joined The Voice Chat.**__", quote=False)
 @app.on_message(filters.command("leavevc") & ~filters.private & filters.user(SUDOERS))
 async def leavevc(_, message):
     chat_id = message.chat.id

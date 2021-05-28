@@ -46,7 +46,7 @@ themes = ["darkred", "lightred", "green", "purple", "skyblue", "dark", "black"]
 
 
 def get_theme(chat_id) -> str:
-    theme = "purple"
+    theme = "black"
     if chat_id not in db:
         db[chat_id] = {}
     if "theme" not in db[chat_id]:

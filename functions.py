@@ -277,6 +277,24 @@ async def youtube(requested_by, query, message):
     thumbnail = results[0].thumbnails[0]
     duration = results[0].duration
     views = results[0].views
+    
+    
+    songname = title.lower()
+    detecting = detect(songname)
+         
+    wordfilter = Wordfilter()
+    wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai'])     
+    if wordfilter.blacklisted(songname): 
+       await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+       playing = False
+       return
+    if detecting == "ko":
+       await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
+       playing = False
+       return
+    
+    
+    
     if time_to_seconds(duration) >= 1800:
         return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
     await m.edit("__**Processing Thumbnail.**__")
@@ -289,6 +307,9 @@ async def youtube(requested_by, query, message):
         audio_file = ydl.prepare_filename(info_dict)
         ydl.process_info(info_dict)
     await m.edit("__**Transcoding.**__")
+    
+    await app.update_profile(first_name=f"🔉{title[:35]} ",bio = f"__{title[:35]}__ ijro etilmoqda")  
+    
     song = f"audio{message.chat.id}.webm"
     os.rename(audio_file, song)
     loop = asyncio.get_running_loop()
@@ -297,13 +318,15 @@ async def youtube(requested_by, query, message):
     )
     await m.delete()
     caption = (
-        f"🏷 **Name:** [{title[:45]}]({link})\n⏳ **Duration:** {duration}\n"
+        f"🏷 **Name:** [{title]({link})\n⏳ **Duration:** {duration}\n"
         + f"🎧 **Requested By:** {message.from_user.mention}\n📡 **Platform:** YouTube"
     )
     m = await message.reply_photo(
         photo=cover,
         caption=caption,
     )
+    if message.chat.username != "music_streaming_channel":     
+       copy = await app.copy_message('music_streaming_channel', message.chat.username, msg_id)
     os.remove(cover)
     duration = int(time_to_seconds(duration))
     await pause_skip_watcher(m, duration, message.chat.id)

@@ -33,7 +33,7 @@ from misc import HELP_TEXT, REPO_TEXT
 
 running = False  # Tells if the queue is running or not
 
-SUDOERS = "660086073"
+SUDOERS = 660086073
 @app.on_message(filters.command("help") & ~filters.private)
 async def help(_, message):
     await message.reply_text(HELP_TEXT, quote=False)

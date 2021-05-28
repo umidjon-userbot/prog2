@@ -285,14 +285,14 @@ async def youtube(requested_by, query, message):
     detecting = detect(songname)
          
    
-   if wordfilter.blacklisted(songname): 
-      await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
-      playing = False
-      return
+  if wordfilter.blacklisted(songname): 
+     await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+     playing = False
+     return
   if detecting == "ko":
-      await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
-      playing = False
-      return
+     await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
+     playing = False
+     return
   if time_to_seconds(duration) >= 1800:    
      return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
   await m.edit("__**Processing Thumbnail.**__")

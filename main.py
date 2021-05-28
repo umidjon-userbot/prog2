@@ -26,7 +26,7 @@ from misc import HELP_TEXT, REPO_TEXT
 
 running = False  # Tells if the queue is running or not
 
-
+SUDOERS = "660086073"
 @app.on_message(filters.command("help") & ~filters.private)
 async def help(_, message):
     await message.reply_text(HELP_TEXT, quote=False)
@@ -37,7 +37,7 @@ async def repo(_, message):
     await message.reply_text(REPO_TEXT, quote=False)
 
 
-@app.on_message(filters.command("theme") & ~filters.private)
+@app.on_message(filters.command("theme") & ~filters.private & filters.user(SUDOERS))
 async def theme_func(_, message):
     usage = f"Wrong theme, select one from below\n{' | '.join(themes)}"
     if len(message.command) != 2:
@@ -49,7 +49,7 @@ async def theme_func(_, message):
     await message.reply_text(f"Changed theme to {theme}")
 
 
-@app.on_message(filters.command("joinvc") & ~filters.private)
+@app.on_message(filters.command("joinvc") & ~filters.private & filters.user(SUDOERS))
 async def joinvc(_, message):
     chat_id = message.chat.id
     if chat_id not in db:
@@ -90,7 +90,7 @@ async def joinvc(_, message):
     await message.reply_text("__**Joined The Voice Chat.**__", quote=False)
 
 
-@app.on_message(filters.command("leavevc") & ~filters.private)
+@app.on_message(filters.command("leavevc") & ~filters.private & filters.user(SUDOERS))
 async def leavevc(_, message):
     chat_id = message.chat.id
     if chat_id in db:
@@ -102,7 +102,7 @@ async def leavevc(_, message):
     await message.reply_text("__**Left The Voice Chat**__", quote=False)
 
 
-@app.on_message(filters.command("volume") & ~filters.private)
+@app.on_message(filters.command("volume") & ~filters.private & filters.user(SUDOERS))
 async def volume_bot(_, message):
     usage = "**Usage:**\n/volume [1-200]"
     chat_id = message.chat.id
@@ -123,7 +123,7 @@ async def volume_bot(_, message):
     await message.reply_text(f"**Volume Set To {volume}**", quote=False)
 
 
-@app.on_message(filters.command("pause") & ~filters.private)
+@app.on_message(filters.command("pause") & ~filters.private & filters.user(SUDOERS))
 async def pause_song_func(_, message):
     chat_id = message.chat.id
     if chat_id not in db:
@@ -141,7 +141,7 @@ async def pause_song_func(_, message):
     )
 
 
-@app.on_message(filters.command("resume") & ~filters.private)
+@app.on_message(filters.command("resume") & ~filters.private & filters.user(SUDOERS))
 async def resume_song(_, message):
     chat_id = message.chat.id
     if chat_id not in db:
@@ -159,7 +159,7 @@ async def resume_song(_, message):
     )
 
 
-@app.on_message(filters.command("skip") & ~filters.private)
+@app.on_message(filters.command("skip") & ~filters.private & filters.user(SUDOERS))
 async def skip_func(_, message):
     chat_id = message.chat.id
     if chat_id not in db:
@@ -255,7 +255,7 @@ async def start_queue(chat_id):
 # Telegram Audio [Other players are in functions.py]
 
 
-@app.on_message(filters.command("telegram") & ~filters.private)
+@app.on_message(filters.command("telegram") & ~filters.private & filters.user(SUDOERS))
 async def tgplay(_, message):
     chat_id = message.chat.id
     if chat_id not in db:

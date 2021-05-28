@@ -10,7 +10,8 @@ HELP_TEXT = """__**I Can Play Music In The Voice Chat**__
 **/pause** __Pause Music.__
 **/resume** __Resume Music.__
 **/theme** __Change Curently Playing Theme.__
-**/update** __Update & Restart.__"""
+**/update** __Update & Restart.__
+Manual guide - https://bit.ly/3fqHij4"""
 
 REPO_TEXT = (
     "[Github](https://github.com/thehamkercat/Telegram_vc_bot)"

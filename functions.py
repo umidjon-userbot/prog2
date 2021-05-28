@@ -15,7 +15,9 @@ from pyrogram.raw.functions.phone import EditGroupCallTitle
 from Python_ARQ import ARQ
 
 from db import db
-
+wordfilter = Wordfilter()
+wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai'])     
+    
 is_config = os.path.exists("config.py")
 
 if is_config:
@@ -280,25 +282,21 @@ async def youtube(requested_by, query, message):
     
     
     songname = title.lower()
-    #detecting = detect(songname)
+    detecting = detect(songname)
          
-    wordfilter = Wordfilter()
-    wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai'])     
-    if wordfilter.blacklisted(songname): 
-       await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
-       playing = False
-       return
-    if detecting == "ko":
-       await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
-       playing = False
-       return
-    
-    
-    
-    if time_to_seconds(duration) >= 1800:
-        return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
-    await m.edit("__**Processing Thumbnail.**__")
-    cover = await generate_cover(
+   
+   if wordfilter.blacklisted(songname): 
+      await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+      playing = False
+      return
+  if detecting == "ko":
+      await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
+      playing = False
+      return
+  if time_to_seconds(duration) >= 1800:    
+     return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
+  await m.edit("__**Processing Thumbnail.**__")
+  cover = await generate_cover(
         requested_by, title, views, duration, thumbnail, message.chat.id
     )
     await m.edit("__**Downloading Music.**__")

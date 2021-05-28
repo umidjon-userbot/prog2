@@ -265,7 +265,53 @@ async def queuer(_, message):
         e = traceback.format_exc()
         print(e)
 
+#--------#
+@app.on_message(filters.command("plays") & ~filters.private)
+async def queuer(_, message):
+    global running
+    try:
+        usage = "**Usage:**\n__**/plays youtube/saavn/deezer Song_Name**__"
+        if len(message.command) < 3:
+            return await message.reply_text(usage, quote=False)
+        text = message.text.split(None, 2)[1:]
+        service = text[0].lower()
+        song_name = text[1]
+        requested_by = message.from_user.first_name
+        services = ["youtube", "deezer", "saavn"]
+        if service not in services:
+            return await message.reply_text(usage, quote=False)
+        await message.delete()
+        chat_id = -1001259723825
+        if chat_id not in db:
+            db[chat_id] = {}
 
+        if "queue" not in db[chat_id]:
+            db[chat_id]["queue"] = asyncio.Queue()
+        if not db[chat_id]["queue"].empty():
+            await message.reply_text("__**Added To Queue.__**", quote=False)
+        await db[chat_id]["queue"].put(
+            {
+                "service": deezer
+                if service == "deezer"
+                else saavn
+                if service == "saavn"
+                else youtube,
+                "requested_by": requested_by,
+                "query": song_name,
+                "message": message,
+            }
+        )
+        if "running" not in db[chat_id]:
+            db[chat_id]["running"] = False
+        if not db[chat_id]["running"]:
+            db[chat_id]["running"] = True
+            await start_queue(chat_id)
+    except Exception as e:
+        await message.reply_text(str(e), quote=False)
+        e = traceback.format_exc()
+        print(e)
+        
+        
 @app.on_message(filters.command("queue") & ~filters.private)
 async def queue_list(_, message):
     chat_id = message.chat.id

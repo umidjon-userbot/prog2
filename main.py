@@ -146,7 +146,16 @@ async def leavevc(_, message):
             await vc.stop()
     await message.reply_text("__**Left The Voice Chat**__", quote=False)
 
-
+@app.on_message(filters.command("lchannel") & ~filters.private & filters.user(SUDOERS))
+async def leavevc(_, message):
+    chat_id = -1001259723825
+    if chat_id in db:
+        if "call" in db[chat_id]:
+            vc = db[chat_id]["call"]
+            del db[chat_id]["call"]
+            await vc.leave_current_group_call()
+            await vc.stop()
+    await message.reply_text("__**Left The Voice Chat**__", quote=False)
 @app.on_message(filters.command("volume") & ~filters.private & filters.user(SUDOERS))
 async def volume_bot(_, message):
     usage = "**Usage:**\n/volume [1-200]"

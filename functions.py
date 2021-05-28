@@ -2,6 +2,12 @@ import asyncio
 import functools
 import os
 
+from langdetect import detect
+from langdetect import detect_langs
+from langdetect import DetectorFactory
+from wordfilter import Wordfilter
+
+
 import aiofiles
 import ffmpeg
 import youtube_dl
@@ -285,18 +291,18 @@ async def youtube(requested_by, query, message):
     detecting = detect(songname)
          
    
-  if wordfilter.blacklisted(songname): 
-     await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
-     playing = False
-     return
-  if detecting == "ko":
-     await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
-     playing = False
-     return
-  if time_to_seconds(duration) >= 1800:    
-     return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
-  await m.edit("__**Processing Thumbnail.**__")
-  cover = await generate_cover(
+    if wordfilter.blacklisted(songname): 
+       await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+       playing = False
+       return
+    if detecting == "ko":
+       await m.edit(f"__**Not allowed Language !!!**__ {songname}")  
+       playing = False
+       return
+    if time_to_seconds(duration) >= 1800:    
+       return await m.edit("__**Bruh! Only songs within 30 Mins.**__")
+    await m.edit("__**Processing Thumbnail.**__")
+    cover = await generate_cover(
         requested_by, title, views, duration, thumbnail, message.chat.id
     )
     await m.edit("__**Downloading Music.**__")

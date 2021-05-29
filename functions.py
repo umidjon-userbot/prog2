@@ -292,7 +292,7 @@ async def youtube(requested_by, query, message):
          
    
     if wordfilter.blacklisted(songname): 
-       await m.edit(f"__**Not Allowed Song {songname}! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+       await m.edit(f"__**Not Allowed Song - {songname}! #Guilty {requested_by}")  
        playing = False
        return
     if detecting == "ko":

@@ -22,7 +22,7 @@ from Python_ARQ import ARQ
 
 from db import db
 wordfilter = Wordfilter()
-wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai'])     
+wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai', 'jigi'])     
     
 is_config = os.path.exists("config.py")
 
@@ -292,7 +292,7 @@ async def youtube(requested_by, query, message):
          
    
     if wordfilter.blacklisted(songname): 
-       await m.edit(f"__**Shame on you ! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
+       await m.edit(f"__**Not Allowed Song {songname}! {requested_by}\nNot allowed song !!!**__\n@wuminjun block him!\n{songname}")  
        playing = False
        return
     if detecting == "ko":

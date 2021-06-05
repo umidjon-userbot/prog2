@@ -22,7 +22,7 @@ from Python_ARQ import ARQ
 
 from db import db
 wordfilter = Wordfilter()
-wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai', 'jigi'])     
+wordfilter.addWords(['yamete', 'kudasai', 'arigato', 'hentai', 'jigi', 'nanahira'])     
     
 is_config = os.path.exists("config.py")
 

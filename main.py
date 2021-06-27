@@ -98,7 +98,7 @@ async def joinvc(_, message):
 #-----------#
 @app.on_message(filters.command("jchannel") & ~filters.private & filters.user(SUDOERS))
 async def joinvc(_, message):
-    chat_id = -1001259723825
+    chat_id = -1001192959588
     if chat_id not in db:
         db[chat_id] = {}
 
@@ -148,7 +148,7 @@ async def leavevc(_, message):
 
 @app.on_message(filters.command("lchannel") & ~filters.private & filters.user(SUDOERS))
 async def leavevc(_, message):
-    chat_id = -1001259723825
+    chat_id = -1001192959588
     if chat_id in db:
         if "call" in db[chat_id]:
             vc = db[chat_id]["call"]

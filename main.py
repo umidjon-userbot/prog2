@@ -239,7 +239,11 @@ async def queuer(_, message):
         text = message.text.split(None, 2)[1:]
         service = text[0].lower()
         song_name = text[1]
-        requested_by = message.from_user.first_name
+        if chat_id == -1001259723825:
+            requested_by = "channel"
+        else:
+            requested_by = message.from_user.first_name
+        
         services = ["youtube", "deezer", "saavn"]
         if service not in services:
             return await message.reply_text(usage, quote=False)

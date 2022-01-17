@@ -13,7 +13,7 @@ if HEROKU:
 if not HEROKU:
     API_ID =  1142474
     API_HASH = "d69d7397d46403cec4de1babe63ef35b"
-    ARQ_API_KEY = "YCLZTK-LIFRNJ-VZNBYY-ISCQAN-ARQ"
+    ARQ_API_KEY = "DDNBVO-XADJDI-GEFBDV-YFEGHV-ARQ"
     SUDOERS = [660086073]
 # don't make changes below this line
 ARQ_API = "https://thearq.tech"
